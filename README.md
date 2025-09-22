@@ -17,9 +17,114 @@ stored.
 5. Map the IP address with its MAC address and return the MAC address to client.
 P
 ## PROGRAM - ARP
+Client
+```
+import socket
+
+s=socket.socket()
+
+s.bind(('localhost',8000))
+
+s.listen(5)
+
+c,addr=s.accept()
+
+address={"10.255.144.126":"98-BD-80-D9-83-4D","10.136.126.196":"98-BD-80-DD-50-C2"};
+
+while True:
+
+      ip=c.recv(1024).decode()
+      
+      try:
+      
+          c.send(address[ip].encode())
+          
+      except KeyError:
+      
+          c.send("Not Found".encode())
+```
+Server
+```
+import socket
+
+s=socket.socket()
+
+s.connect(('localhost',8000))
+
+while True:
+
+  ip=input("Enter logical Address : ")
+
+  s.send(ip.encode())
+
+  print("MAC Address",s.recv(1024).decode())
+```
 ## OUPUT - ARP
+
+Client
+
+<img width="515" height="75" alt="image" src="https://github.com/user-attachments/assets/f24d9fb1-0d20-4be2-bee8-7f60fe0110c1" />
+
+Server
+
+<img width="1022" height="133" alt="image" src="https://github.com/user-attachments/assets/ba9b00b7-f4aa-4175-bc53-99172e9c2ed4" />
+
+
 ## PROGRAM - RARP
+
+Client
+```
+import socket
+
+s=socket.socket()
+
+s.bind(('localhost',8080))
+
+s.listen(5)
+
+c,addr=s.accept()
+
+address={"98-BD-80-D9-83-4D":"10.255.144.126","98-BD-80-DD-50-C2":"10.136.126.196"};
+
+while True:
+
+      ip=c.recv(1024).decode()
+      
+      try:
+      
+          c.send(address[ip].encode())
+          
+      except KeyError:
+      
+          c.send("Not Found".encode()) 
+```
+Server
+```
+import socket
+
+s=socket.socket()
+
+s.connect(('localhost',8080))
+
+while True:
+
+  ip=input("Enter MAC Address : ")
+
+  s.send(ip.encode())
+
+  print("Logical Address",s.recv(1024).decode())
+```
 ## OUPUT -RARP
+
+Client
+
+<img width="620" height="85" alt="image" src="https://github.com/user-attachments/assets/56b26605-5cb8-404b-8974-9d8e22beaf35" />
+
+Server
+
+<img width="657" height="147" alt="image" src="https://github.com/user-attachments/assets/304bd9a7-b110-40b6-93d4-83d948c33654" />
+
+
 ## RESULT
 Thus, the python program for simulating ARP protocols using TCP was successfully 
 executed.
